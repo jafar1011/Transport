@@ -8,20 +8,19 @@ namespace Transport.Data.Tables
         [Key]
         public int CarId { get; set; }
 
-        [Required, MaxLength(50)]
+        [Required]
         public string Model { get; set; }
 
-        [Required, MaxLength(20)]
+        [Required]
         public string Plate { get; set; }
 
-        [Range(1, 20)]
+        [Required]
         public int PassengersTotal { get; set; }
 
-        public Driver Driver { get; set; }
+        public virtual Driver Driver { get; set; }
 
         public ICollection<User> Users { get; set; } = new List<User>();
 
-        [NotMapped]
         public int PassengersRemaining => PassengersTotal - (Users?.Count ?? 0);
     }
 }

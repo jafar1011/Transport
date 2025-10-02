@@ -8,16 +8,15 @@ namespace Transport.Data.Tables
         [Key]
         public int DriverId { get; set; }
 
-        [Required, MaxLength(100)]
+        [Required]
         public string Name { get; set; }
 
-        [Required, MaxLength(20)]
+        [Required]
         public string Phone { get; set; }
 
         [Required]
         public string PasswordHash { get; set; }
-
-        [MaxLength(200)]
+        [Required]
         public string Areas { get; set; }
 
         [Range(0, 5)]
@@ -27,6 +26,6 @@ namespace Transport.Data.Tables
         public int CarId { get; set; }
 
         [ForeignKey("CarId")]
-        public Car Car { get; set; }
+        public virtual Car Car { get; set; }
     }
     }

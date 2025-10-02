@@ -8,10 +8,10 @@ namespace Transport.Data.Tables
         [Key]
         public int ParentId { get; set; }
 
-        [Required, MaxLength(100)]
+        [Required]
         public string Name { get; set; }
 
-        [Required, MaxLength(20)]
+        [Required]
         public string Phone { get; set; }
 
         [Required]
@@ -21,6 +21,6 @@ namespace Transport.Data.Tables
         public int UserId { get; set; }
 
         [ForeignKey("UserId")]
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }
