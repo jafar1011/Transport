@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Transport.Data;
 
@@ -11,9 +12,11 @@ using Transport.Data;
 namespace Transport.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251003231925_MigV1.1_RolesAdded")]
+    partial class MigV11_RolesAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -287,6 +290,10 @@ namespace Transport.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -314,35 +321,38 @@ namespace Transport.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("ParentId");
 
-                    b.HasIndex("StudentId")
+                    b.HasIndex("UserId")
                         .IsUnique();
 
                     b.ToTable("Parents");
                 });
 
-            modelBuilder.Entity("Transport.Data.Tables.Student", b =>
+            modelBuilder.Entity("Transport.Data.Tables.User", b =>
                 {
-                    b.Property<int>("StudentId")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CarId")
-                        .IsRequired()
+                    b.Property<int>("CarId")
                         .HasColumnType("int");
 
                     b.Property<string>("College")
@@ -353,11 +363,11 @@ namespace Transport.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdentityUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -373,13 +383,11 @@ namespace Transport.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("StudentId");
+                    b.HasKey("UserId");
 
                     b.HasIndex("CarId");
 
-                    b.HasIndex("IdentityUserId");
-
-                    b.ToTable("Students");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -446,32 +454,24 @@ namespace Transport.Data.Migrations
 
             modelBuilder.Entity("Transport.Data.Tables.Parent", b =>
                 {
-                    b.HasOne("Transport.Data.Tables.Student", "Student")
+                    b.HasOne("Transport.Data.Tables.User", "User")
                         .WithOne("Parent")
-                        .HasForeignKey("Transport.Data.Tables.Parent", "StudentId")
+                        .HasForeignKey("Transport.Data.Tables.Parent", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Student");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Transport.Data.Tables.Student", b =>
+            modelBuilder.Entity("Transport.Data.Tables.User", b =>
                 {
                     b.HasOne("Transport.Data.Tables.Car", "Car")
-                        .WithMany("Students")
+                        .WithMany("Users")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("IdentityUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Car");
-
-                    b.Navigation("IdentityUser");
                 });
 
             modelBuilder.Entity("Transport.Data.Tables.Car", b =>
@@ -479,10 +479,10 @@ namespace Transport.Data.Migrations
                     b.Navigation("Driver")
                         .IsRequired();
 
-                    b.Navigation("Students");
+                    b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Transport.Data.Tables.Student", b =>
+            modelBuilder.Entity("Transport.Data.Tables.User", b =>
                 {
                     b.Navigation("Parent")
                         .IsRequired();

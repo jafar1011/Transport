@@ -19,8 +19,8 @@ namespace Transport.Data.Tables
 
         public virtual Driver Driver { get; set; }
 
-        public ICollection<User> Users { get; set; } = new List<User>();
+        public ICollection<Student> Students { get; set; } = new List<Student>();
 
-        public int PassengersRemaining => PassengersTotal - (Users?.Count ?? 0);
+        public int PassengersRemaining => PassengersTotal - (Students?.Count ?? 0);
     }
 }

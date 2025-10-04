@@ -14,13 +14,11 @@ namespace Transport.Data.Tables
         [Required]
         public string Phone { get; set; }
 
-        [Required]
-        public string PasswordHash { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public int StudentId { get; set; }
 
-        [ForeignKey("UserId")]
-        public virtual User User { get; set; }
+        [ForeignKey("StudentId")]
+        public virtual Student Student { get; set; }
     }
 }
