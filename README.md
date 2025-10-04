@@ -8,7 +8,7 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
 
 ---
 
-## Change Log – Version 1
+## Change Log – 1
 
 - Replaced the **User** table with a **Student** table.  
 - Using **IdentityUser** for all users.  
@@ -17,3 +17,12 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
   - **Driver:** Add/edit car information.  
   - **Student:** Manage academic information.  
   - **Parent:** Manage linked student information.
+ 
+    <br>
+    ---
+## Change Log – 2
+- Users with Role "Driver" can now Add a full post with all details (name,phone,car,areas).
+- Posts will be shown to all users  .
+- Post author can delete his own posts.
+- Search box that searches all posts by area.
+- UI changes and css and icons for home view.
