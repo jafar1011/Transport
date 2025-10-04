@@ -1,6 +1,6 @@
 # Project
 
-Hi, this is the flowchart of the tables at the moment. <br> I have added the tables to local sql server (My individual accounts by default is sqlserver not sqlite). <br>
+Hi, this is the flowchart of the tables at the moment. <br> I have added the tables to local sql server (My individual accounts by default is sqlserver not sqlite(this has been changed to sqlite)). <br>
 
 📄 **[FlowChart V2](https://drive.google.com/file/d/1zkqRh20PhbxSPWsJ4BazyAK7lLSVKNWd/view?usp=drive_link)**
 
@@ -26,3 +26,4 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
 - Post author can delete his own posts.
 - Search box that searches all posts by area.
 - UI changes and css and icons for home view.
+- Swapped to sqlite instead of sqlserver so the database will be included
