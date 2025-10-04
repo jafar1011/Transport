@@ -31,7 +31,7 @@ namespace Transport.Data.Tables
         [Required]
         public string Stage { get; set; }
 
-        [Required]
+
         public int? CarId { get; set; }
 
         [ForeignKey("CarId")]

@@ -16,6 +16,8 @@ namespace Transport.Data
         public DbSet<Car> Cars { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Parent> Parents { get; set; }
+        public DbSet<DriverPost> DriverPosts { get; set; }
+        public DbSet<DriverPostArea> DriverPostAreas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -26,6 +28,31 @@ namespace Transport.Data
                 new IdentityRole { Id = "2", Name = "Student", NormalizedName = "STUDENT" },
                 new IdentityRole { Id = "3", Name = "Parent", NormalizedName = "PARENT" }
             );
+
+
+            builder.Entity<Student>()
+        .HasOne(s => s.IdentityUser)
+        .WithMany()
+        .HasForeignKey(s => s.IdentityUserId)
+        .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Car>()
+       .HasOne(c => c.IdentityUser)
+       .WithMany()
+       .HasForeignKey(c => c.IdentityUserId)
+       .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Driver>()
+                .HasOne(d => d.IdentityUser)
+                .WithMany()
+                .HasForeignKey(d => d.IdentityUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Parent>()
+    .HasOne(p => p.IdentityUser)
+    .WithMany()
+    .HasForeignKey(p => p.IdentityUserId)
+    .OnDelete(DeleteBehavior.Restrict);
         }
     }
 

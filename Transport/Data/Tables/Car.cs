@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Transport.Data.Tables
@@ -22,5 +23,9 @@ namespace Transport.Data.Tables
         public ICollection<Student> Students { get; set; } = new List<Student>();
 
         public int PassengersRemaining => PassengersTotal - (Students?.Count ?? 0);
+
+        public string IdentityUserId { get; set; }
+        [ForeignKey("IdentityUserId")]
+        public IdentityUser IdentityUser { get; set; }
     }
 }

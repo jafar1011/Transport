@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Transport.Data;
 
@@ -11,9 +12,11 @@ using Transport.Data;
 namespace Transport.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251004110455_MigV1.5_Fixes")]
+    partial class MigV15_Fixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -314,68 +317,6 @@ namespace Transport.Data.Migrations
                     b.ToTable("Drivers");
                 });
 
-            modelBuilder.Entity("Transport.Data.Tables.DriverPost", b =>
-                {
-                    b.Property<int>("PostId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostId"));
-
-                    b.Property<bool>("AirCondition")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("CarName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CarYear")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("IdentityUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PostId");
-
-                    b.HasIndex("IdentityUserId");
-
-                    b.ToTable("DriverPosts");
-                });
-
-            modelBuilder.Entity("Transport.Data.Tables.DriverPostArea", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AreaName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DriverPostId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DriverPostId");
-
-                    b.ToTable("DriverPostAreas");
-                });
-
             modelBuilder.Entity("Transport.Data.Tables.Parent", b =>
                 {
                     b.Property<int>("ParentId")
@@ -543,28 +484,6 @@ namespace Transport.Data.Migrations
                     b.Navigation("IdentityUser");
                 });
 
-            modelBuilder.Entity("Transport.Data.Tables.DriverPost", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("IdentityUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("IdentityUser");
-                });
-
-            modelBuilder.Entity("Transport.Data.Tables.DriverPostArea", b =>
-                {
-                    b.HasOne("Transport.Data.Tables.DriverPost", "DriverPost")
-                        .WithMany("Areas")
-                        .HasForeignKey("DriverPostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DriverPost");
-                });
-
             modelBuilder.Entity("Transport.Data.Tables.Parent", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
@@ -605,11 +524,6 @@ namespace Transport.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Students");
-                });
-
-            modelBuilder.Entity("Transport.Data.Tables.DriverPost", b =>
-                {
-                    b.Navigation("Areas");
                 });
 
             modelBuilder.Entity("Transport.Data.Tables.Student", b =>

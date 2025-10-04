@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Transport.Data.Tables
@@ -25,5 +26,9 @@ namespace Transport.Data.Tables
 
         [ForeignKey("CarId")]
         public virtual Car Car { get; set; }
+
+        public string IdentityUserId { get; set; }
+        [ForeignKey("IdentityUserId")]
+        public IdentityUser IdentityUser { get; set; }
     }
     }

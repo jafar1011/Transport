@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Transport.Data.Tables
@@ -15,10 +16,13 @@ namespace Transport.Data.Tables
         public string Phone { get; set; }
 
 
-        [Required]
-        public int StudentId { get; set; }
+        public int? StudentId { get; set; }
 
         [ForeignKey("StudentId")]
         public virtual Student Student { get; set; }
+
+        public string IdentityUserId { get; set; }
+        [ForeignKey("IdentityUserId")]
+        public IdentityUser IdentityUser { get; set; }
     }
 }
