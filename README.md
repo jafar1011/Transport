@@ -19,7 +19,7 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
   - **Parent:** Manage linked student information.
  
     <br>
-    ---
+    
 ## Change Log – 2 - 2025/10/4
 - Users with Role "Driver" can now Add a full post with all details (name,phone,car,areas).
 - Posts will be shown to all users  .
