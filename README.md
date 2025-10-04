@@ -8,7 +8,7 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
 
 ---
 
-## Change Log – 1
+## Change Log – 1 - 2025/10/3
 
 - Replaced the **User** table with a **Student** table.  
 - Using **IdentityUser** for all users.  
@@ -20,7 +20,7 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
  
     <br>
     ---
-## Change Log – 2
+## Change Log – 2 - 2025/10/4
 - Users with Role "Driver" can now Add a full post with all details (name,phone,car,areas).
 - Posts will be shown to all users  .
 - Post author can delete his own posts.
