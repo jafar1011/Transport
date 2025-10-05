@@ -34,3 +34,7 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
 - A driver can add (link) a passenger to its car using phone number.
 - The driver will be able to see all passengers information in that page aswell.
 - The student will be assigned to that specific car.
+
+<br>
+<img width="574" height="542" alt="image" src="https://github.com/user-attachments/assets/59053608-b8e8-4b93-8bf1-c06e33e03601" />
+
