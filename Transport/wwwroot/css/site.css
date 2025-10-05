@@ -104,8 +104,8 @@ footer {
 
 .search-wrapper {
     position: relative;
-    display: inline-block; /* keeps it inline with other elements */
-    margin-bottom: 1rem; /* space from posts */
+    display: inline-block; 
+    margin-bottom: 1rem; 
 }
 
 .search-wrapper {
@@ -138,7 +138,7 @@ footer {
 
     .search-wrapper:hover .search-form,
     .search-form.active {
-        left: 40px; /* adjust slide distance */
+        left: 40px; 
         opacity: 1;
         visibility: visible;
     }

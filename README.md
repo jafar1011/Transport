@@ -21,9 +21,16 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
     <br>
     
 ## Change Log – 2 - 2025/10/4
-- Users with Role "Driver" can now Add a full post with all details (name,phone,car,areas).
-- Posts will be shown to all users  .
+- Users with Role "Driver" can now add a full post with all details (name,phone,car,areas).
+- Posts will be shown to all users.
 - Post author can delete his own posts.
 - Search box that searches all posts by area.
 - UI changes and css and icons for home view.
-- Swapped to sqlite instead of sqlserver so the database will be included
+- Swapped to sqlite instead of sqlserver so the database will be included in the project.
+<br>
+
+## Change Log – 3 - 2025/10/5
+- Added passengers controller with its view (for drivers only).
+- A driver can add (link) a passenger to its car using phone number.
+- The driver will be able to see all passengers information in that page aswell.
+- The student will be assigned to that specific car.

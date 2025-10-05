@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Transport.Data.Tables.Student>
+
+@{
+    ViewData["Title"] = "My Passengers";
+}
+
+<h1 class="text-white mb-3">@ViewData["Title"]</h1>
+
+<!-- Success / Error Alerts -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success w-50">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger w-50">@TempData["Error"]</div>
+}
+
+<!-- Add Passenger Button -->
+<button class="btn btn-primary mb-3" id="btnAddPassenger">Add Passenger</button>
+
+<!-- Hidden Add Passenger Form -->
+<div id="pform-container" style="display:none;">
+    <form id="addpform" asp-action="AddPassenger" method="post">
+        <label class="text-white">Add by phone number</label>
+        <input name="phone" type="text" class="form-control mb-3 w-25" placeholder="Enter student phone..." />
+        <button type="submit" class="btn btn-success mb-3">Add</button>
+    </form>
+</div>
+
+<hr class="text-white my-4" />
+
+<!-- Passenger Cards -->
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        @foreach (var student in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card bg-dark text-white shadow-lg border-secondary">
+                    <div class="card-body">
+                        <h5 class="card-title">@student.Name</h5>
+                        <p class="card-text mb-1"><strong>Phone:</strong> @student.Phone</p>
+                        <p class="card-text mb-1"><strong>Address:</strong> @student.Address</p>
+                        <p class="card-text mb-0"><strong>University:</strong> @student.University</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p class="text-white">No passengers assigned yet.</p>
+}
+
+@section Scripts {
+    <script>
+        document.getElementById("btnAddPassenger").addEventListener("click", function () {
+            const form = document.getElementById("pform-container");
+            form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+        });
+    </script>
+}
