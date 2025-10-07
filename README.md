@@ -35,6 +35,9 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
 - The driver will be able to see all passengers information in that page aswell.
 - The student will be assigned to that specific car.
 
+<br>
+<img width="574" height="542" alt="image" src="https://github.com/user-attachments/assets/59053608-b8e8-4b93-8bf1-c06e33e03601" />
+
 ## Change Log – 4 - 2025/10/7
 - Added ratings to drivers posts to be viewed by users when browsing
 - users with role of "students" now have a page "My Driver" that contain their driver and his car information
