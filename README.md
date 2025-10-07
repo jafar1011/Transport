@@ -40,4 +40,4 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
 
 ## Change Log – 4 - 2025/10/7
 - Added the driver's rating to his posts to be viewed by users when browsing
-- users with role of "students" now have a page "My Driver" that contain their driver and his car information
+- users with role of "Student" now have a page "My Driver" that contain their driver and his car information
