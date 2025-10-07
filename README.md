@@ -34,3 +34,7 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
 - A driver can add (link) a passenger to its car using phone number.
 - The driver will be able to see all passengers information in that page aswell.
 - The student will be assigned to that specific car.
+
+## Change Log – 4 - 2025/10/7
+- Added ratings to drivers posts to be viewed by users when browsing
+- users with role of "students" now have a page "My Driver" that contain their driver and his car information

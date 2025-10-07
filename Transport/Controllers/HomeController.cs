@@ -32,15 +32,16 @@ namespace Transport.Controllers
                                                .FirstOrDefaultAsync(d => d.IdentityUserId == userId);
             }
 
-            var postsQuery = _context.DriverPosts.Include(p => p.Areas).AsQueryable();
-
-            // Filter by area
+            var postsQuery = _context.DriverPosts
+     .Include(p => p.Driver)
+     .Include(p => p.Areas)
+     .AsQueryable();
+            
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 postsQuery = postsQuery.Where(p => p.Areas.Any(a => a.AreaName.Contains(searchTerm)));
             }
 
-           
 
             var posts = await postsQuery.ToListAsync();
 
@@ -101,7 +102,7 @@ namespace Transport.Controllers
             var post = _context.DriverPosts.FirstOrDefault(p => p.PostId == id && p.IdentityUserId == userId);
             if (post == null)
             {
-                return Unauthorized(); // Prevent deleting others' posts
+                return Unauthorized(); 
             }
 
             _context.DriverPosts.Remove(post);

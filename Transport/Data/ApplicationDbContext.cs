@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 using Transport.Data.Tables;
-using Microsoft.AspNetCore.Identity;
 
 namespace Transport.Data
 {
@@ -53,6 +54,13 @@ namespace Transport.Data
     .WithMany()
     .HasForeignKey(p => p.IdentityUserId)
     .OnDelete(DeleteBehavior.Restrict);
+
+
+            builder.Entity<DriverPost>()
+    .HasOne(p => p.Driver)
+    .WithMany() 
+    .HasForeignKey(p => p.IdentityUserId)
+    .HasPrincipalKey(d => d.IdentityUserId);
         }
     }
 

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "My Driver";
+}
+@if (ViewBag.Driver != null)
+{
+    <div class="card bg-dark text-white p-3">
+        <h4>Driver</h4>
+        <p>Name: @ViewBag.Driver.Name <br />Phone: @ViewBag.Driver.Phone  </p>
+        <p>  <i class="fa-solid fa-star fa-lg mb-3" style="color: #FFD43B; "> </i> @ViewBag.Driver?.Rating </p>
+
+        @if (ViewBag.Driver.Car != null)
+        {
+            <h5>Car</h5>
+            <p>Model: @ViewBag.Driver.Car.Model</p>
+            <p>Plate: @ViewBag.Driver.Car.Plate</p>
+            <p>Passengers: @ViewBag.Driver.Car.PassengersTotal</p>
+        }
+        else
+        {
+            <p>No car assigned yet.</p>
+        }
+    </div>
+}
+else
+{
+    <p>No driver found.</p>
+}
