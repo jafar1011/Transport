@@ -8,12 +8,12 @@ using Transport.Data.Tables;
 namespace Transport.Controllers
 {
     [Authorize(Roles = "Driver")]
-    public class PassengersController : Controller
+    public class DriverController : Controller
     {
-        private readonly ILogger<PassengersController> _logger;
+        private readonly ILogger<DriverController> _logger;
         private readonly ApplicationDbContext _context;
 
-        public PassengersController(ILogger<PassengersController> logger, ApplicationDbContext context)
+        public DriverController(ILogger<DriverController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
@@ -53,7 +53,6 @@ namespace Transport.Controllers
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            
             var driver = await _context.Drivers
                 .Include(d => d.Car)
                 .FirstOrDefaultAsync(d => d.IdentityUserId == userId);
@@ -64,7 +63,6 @@ namespace Transport.Controllers
                 return RedirectToAction("Index");
             }
 
-            
             var student = await _context.Students.FirstOrDefaultAsync(s => s.Phone == phone);
 
             if (student == null)
@@ -73,26 +71,51 @@ namespace Transport.Controllers
                 return RedirectToAction("Index");
             }
 
-            
             if (student.CarId != null)
             {
                 TempData["Error"] = "This student is already assigned to another car.";
                 return RedirectToAction("Index");
             }
 
-            
-            var currentCount = await _context.Students.CountAsync(s => s.CarId == driver.CarId);
-            if (currentCount >= driver.Car.PassengersTotal)
+            var existingInvite = await _context.Invites
+                .FirstOrDefaultAsync(i => i.StudentId == student.StudentId && i.DriverId == driver.DriverId && i.Status == "Pending");
+
+            if (existingInvite != null)
             {
-                TempData["Error"] = "No remaining seats in your car.";
+                TempData["Error"] = "An invite is already pending for this student.";
                 return RedirectToAction("Index");
             }
 
-            //
-            student.CarId = driver.CarId;
+            var invite = new Invite
+            {
+                StudentId = student.StudentId,
+                DriverId = driver.DriverId,
+                Status = "Pending"
+            };
+
+            _context.Invites.Add(invite);
             await _context.SaveChangesAsync();
 
-            TempData["Success"] = $"{student.Name} added as passenger.";
+            TempData["Success"] = $"Invite sent to {student.Name}. Awaiting approval.";
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> RemovePassenger(int studentId)
+        {
+            if (!User.IsInRole("Driver"))
+                return Forbid();
+
+            var student = await _context.Students.FindAsync(studentId);
+            if (student == null || student.CarId == null)
+            {
+                TempData["Error"] = "Passenger not found or not assigned.";
+                return RedirectToAction("Index");
+            }
+
+            student.CarId = null;
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = $"{student.Name} removed successfully.";
             return RedirectToAction("Index");
         }
     }

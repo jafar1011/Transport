@@ -16,10 +16,11 @@
     <div class="alert alert-danger w-50">@TempData["Error"]</div>
 }
 
-<!-- Add Passenger Button -->
-<button class="btn btn-primary mb-3" id="btnAddPassenger">Add Passenger</button>
 
-<!-- Hidden Add Passenger Form -->
+<button class="btn btn-primary mb-3 mx-2" id="btnAddPassenger"><i class="fa-solid fa-user"></i> Add Passenger</button>
+
+
+
 <div id="pform-container" style="display:none;">
     <form id="addpform" asp-action="AddPassenger" method="post">
         <label class="text-white">Add by phone number</label>
@@ -30,7 +31,7 @@
 
 <hr class="text-white my-4" />
 
-<!-- Passenger Cards -->
+
 @if (Model != null && Model.Any())
 {
     <div class="row">
@@ -39,10 +40,22 @@
             <div class="col-md-4 mb-3">
                 <div class="card bg-dark text-white shadow-lg border-secondary">
                     <div class="card-body">
-                        <h5 class="card-title">@student.Name</h5>
+                        <h5 class="card-title text-success">@student.Name</h5>
                         <p class="card-text mb-1"><strong>Phone:</strong> @student.Phone</p>
                         <p class="card-text mb-1"><strong>Address:</strong> @student.Address</p>
-                        <p class="card-text mb-0"><strong>University:</strong> @student.University</p>
+                        <p class="card-text mb-5"><strong>University:</strong> @student.University</p>
+                        <a href="https://wa.me/@student.Phone?text=@Uri.EscapeDataString("Your driver has arrived")"
+                           target="_blank"
+                           class="btn btn-warning btn-sm">
+                            <i class="fa-solid fa-bell"></i> Alert On Arrive
+                        </a>
+                        <form asp-action="RemovePassenger" method="post" class="mt-2 remove-passenger-form">
+                            <input type="hidden" name="studentId" value="@student.StudentId" />
+                            <button type="submit" class="btn btn-danger btn-sm mb-3"><i class="fa-solid fa-trash"></i> Remove</button>
+                            
+
+                        </form>
+                       
                     </div>
                 </div>
             </div>
@@ -59,6 +72,15 @@ else
         document.getElementById("btnAddPassenger").addEventListener("click", function () {
             const form = document.getElementById("pform-container");
             form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+        });
+
+
+        const removeForms = document.querySelectorAll(".remove-passenger-form");
+        removeForms.forEach(form => {
+            form.addEventListener("submit", function (e) {
+                const confirmed = confirm("Are you sure you want to remove this passenger?");
+                if (!confirmed) e.preventDefault();
+            });
         });
     </script>
 }

@@ -1,0 +1,64 @@
+﻿@model Transport.Data.Tables.Parent
+@{
+    ViewData["Title"] = "Linking";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success w-50">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger w-50">@TempData["Error"]</div>
+}
+
+<button class="btn btn-primary mb-3 mx-2" id="btnLinkStudent">
+    <i class="fa-solid fa-user"></i> Link a Student
+</button>
+
+<div id="pform-container" style="display:none;">
+    <form id="addpform" asp-action="LinkStudent" method="get">
+        <label class="text-white">Add by phone number</label>
+        <input name="phone" type="text" class="form-control mb-3 w-25" placeholder="Enter student phone..." />
+        <button type="submit" class="btn btn-success mb-3">Add</button>
+    </form>
+</div>
+<h2 class="text-white mb-3">Linked Student</h2>
+
+@if (Model?.Student != null)
+{
+    <div class=" card bg-dark text-white border-secondary shadow-sm row col-md-4">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Student.Name</h5>
+            <p><strong>Phone:</strong> @Model.Student.Phone</p>
+            <p><strong>University:</strong> @Model.Student.University</p>
+            <p><strong>Address:</strong> @Model.Student.Address</p>
+            <div class="text-center ">
+            <button type="submit" class="btn btn-warning  btn-sm">
+                <i class="fa-solid fa-location-dot"></i> Track
+            </button>
+            <form asp-action="UnlinkStudent" method="post" class="d-inline">
+                <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="fa-solid fa-xmark"></i> Unlink
+                </button>
+            </form>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <p class="text-white">No student linked.</p>
+}
+
+
+@section Scripts {
+    <script>
+        document.getElementById("btnLinkStudent").addEventListener("click", function () {
+            const form = document.getElementById("pform-container");
+            form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+        });
+        
+        
+    </script>
+}

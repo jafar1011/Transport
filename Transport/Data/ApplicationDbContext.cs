@@ -19,29 +19,32 @@ namespace Transport.Data
         public DbSet<Parent> Parents { get; set; }
         public DbSet<DriverPost> DriverPosts { get; set; }
         public DbSet<DriverPostArea> DriverPostAreas { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<Invite> Invites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
+            
             builder.Entity<IdentityRole>().HasData(
                 new IdentityRole { Id = "1", Name = "Driver", NormalizedName = "DRIVER" },
                 new IdentityRole { Id = "2", Name = "Student", NormalizedName = "STUDENT" },
                 new IdentityRole { Id = "3", Name = "Parent", NormalizedName = "PARENT" }
             );
 
-
+            
             builder.Entity<Student>()
-        .HasOne(s => s.IdentityUser)
-        .WithMany()
-        .HasForeignKey(s => s.IdentityUserId)
-        .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(s => s.IdentityUser)
+                .WithMany()
+                .HasForeignKey(s => s.IdentityUserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Car>()
-       .HasOne(c => c.IdentityUser)
-       .WithMany()
-       .HasForeignKey(c => c.IdentityUserId)
-       .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(c => c.IdentityUser)
+                .WithMany()
+                .HasForeignKey(c => c.IdentityUserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Driver>()
                 .HasOne(d => d.IdentityUser)
@@ -50,17 +53,24 @@ namespace Transport.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Parent>()
-    .HasOne(p => p.IdentityUser)
-    .WithMany()
-    .HasForeignKey(p => p.IdentityUserId)
-    .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(p => p.IdentityUser)
+                .WithMany()
+                .HasForeignKey(p => p.IdentityUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+           
+            builder.Entity<DriverPost>()
+                .HasOne(p => p.Driver)
+                .WithMany()
+                .HasForeignKey(p => p.DriverId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             builder.Entity<DriverPost>()
     .HasOne(p => p.Driver)
-    .WithMany() 
-    .HasForeignKey(p => p.IdentityUserId)
-    .HasPrincipalKey(d => d.IdentityUserId);
+    .WithMany()
+    .HasForeignKey(p => p.DriverId)
+    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 

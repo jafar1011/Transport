@@ -24,17 +24,29 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        @*driver only pages*@
                         @if (User.IsInRole("Driver"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Passengers" asp-action="Index">My Passengers</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Driver" asp-action="Index">My Passengers</a>
                             </li>
                         }
-
+                        @*student only pages*@
                         @if (User.IsInRole("Student"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="MyDriver" asp-action="Index">My Driver</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Student" asp-action="Index">My Driver</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Student" asp-action="Invites">Invites</a>
+                            </li>
+                        }
+
+                        @*student only pages*@
+                        @if (User.IsInRole("Parent"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Parent" asp-action="Index">Linking</a>
                             </li>
                         }
                         <li class="nav-item">

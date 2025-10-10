@@ -19,7 +19,8 @@ namespace Transport.Data.Tables
         public string Areas { get; set; }
 
         [Range(0, 5)]
-        public decimal Rating { get; set; }
+        [NotMapped]
+        public float Rating { get; set; }
 
         [Required]
         public int CarId { get; set; }

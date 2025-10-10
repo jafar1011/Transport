@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Transport.Data;
 
@@ -10,9 +11,11 @@ using Transport.Data;
 namespace Transport.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251010171658_MigV1.4_Added_Invites")]
+    partial class MigV14_Added_Invites
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.17");
@@ -356,39 +359,6 @@ namespace Transport.Migrations
                     b.ToTable("DriverPostAreas");
                 });
 
-            modelBuilder.Entity("Transport.Data.Tables.Invite", b =>
-                {
-                    b.Property<int>("InviteId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("DriverId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("InviteId");
-
-                    b.HasIndex("DriverId");
-
-                    b.HasIndex("ParentId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Invites");
-                });
-
             modelBuilder.Entity("Transport.Data.Tables.Parent", b =>
                 {
                     b.Property<int>("ParentId")
@@ -594,29 +564,6 @@ namespace Transport.Migrations
                         .IsRequired();
 
                     b.Navigation("DriverPost");
-                });
-
-            modelBuilder.Entity("Transport.Data.Tables.Invite", b =>
-                {
-                    b.HasOne("Transport.Data.Tables.Driver", "Driver")
-                        .WithMany()
-                        .HasForeignKey("DriverId");
-
-                    b.HasOne("Transport.Data.Tables.Parent", "Parent")
-                        .WithMany()
-                        .HasForeignKey("ParentId");
-
-                    b.HasOne("Transport.Data.Tables.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Driver");
-
-                    b.Navigation("Parent");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Transport.Data.Tables.Parent", b =>

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Transport.Data.Tables.Invite>
+@{
+    ViewData["Title"] = "Invites";
+}
+
+<h2 class="text-white mb-4">Pending Invites</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No pending invites.</div>
+}
+else
+{
+    <div class="row">
+        @foreach (var invite in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card bg-dark text-white border-secondary shadow-sm">
+                    <div class="card-body">
+                        @if (invite.Driver != null)
+                        {
+                            <h5 class="card-title">
+                                <span class="badge bg-primary">Driver Invite</span>
+                                @invite.Driver.Name
+                            </h5>
+                            <p class="card-text">
+                                <strong>Phone:</strong> @invite.Driver.Phone <br />
+                                <strong>Car:</strong> @invite.Driver.Car?.Model <br />
+                                <strong>Plate:</strong> @invite.Driver.Car?.Plate
+                            </p>
+                        }
+                        else if (invite.Parent != null)
+                        {
+                            <h5 class="card-title">
+                                <span class="badge bg-info text-dark">Parent Invite</span>
+                                @invite.Parent.Name
+                            </h5>
+                            <p class="card-text">
+                                <strong>Phone:</strong> @invite.Parent.Phone
+                            </p>
+                        }
+
+                        <form asp-action="AcceptInvite" method="post" class="d-inline">
+                            <input type="hidden" name="inviteId" value="@invite.InviteId" />
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <i class="fa-solid fa-check"></i> Accept
+                            </button>
+                        </form>
+
+                        <form asp-action="RejectInvite" method="post" class="d-inline">
+                            <input type="hidden" name="inviteId" value="@invite.InviteId" />
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="fa-solid fa-xmark"></i> Reject
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

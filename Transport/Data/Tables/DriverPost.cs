@@ -10,13 +10,11 @@ namespace Transport.Data.Tables
         [Key]
         public int PostId { get; set; }
 
-   
-        [Required]
-        public string IdentityUserId { get; set; }
-        [ForeignKey("IdentityUserId")]
-        public IdentityUser IdentityUser { get; set; }
+        public int DriverId { get; set; }
 
-        
+        [ForeignKey(nameof(DriverId))]
+        public Driver Driver { get; set; }
+
         [Required]
         public string Name { get; set; }
         [Required]
@@ -31,9 +29,10 @@ namespace Transport.Data.Tables
         
         public List<DriverPostArea> Areas { get; set; } = new List<DriverPostArea>();
 
-        
+        public string? Note { get; set; }
+
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public Driver Driver { get; set; }
     }
 
     public class DriverPostArea

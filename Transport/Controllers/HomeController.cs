@@ -20,30 +20,44 @@ namespace Transport.Controllers
             _context = context;
         }
 
-        
-          public async Task<IActionResult> Index(string searchTerm)
+
+        public async Task<IActionResult> Index(string searchTerm)
         {
             Driver driver = null;
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (User.IsInRole("Driver") && userId != null)
             {
-                driver = await _context.Drivers.Include(d => d.Car)
-                                               .FirstOrDefaultAsync(d => d.IdentityUserId == userId);
+                driver = await _context.Drivers
+                    .Include(d => d.Car)
+                    .FirstOrDefaultAsync(d => d.IdentityUserId == userId);
             }
 
             var postsQuery = _context.DriverPosts
-     .Include(p => p.Driver)
-     .Include(p => p.Areas)
-     .AsQueryable();
-            
+                .Include(p => p.Driver)
+                .Include(p => p.Areas)
+                .AsQueryable();
+
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 postsQuery = postsQuery.Where(p => p.Areas.Any(a => a.AreaName.Contains(searchTerm)));
             }
 
-
             var posts = await postsQuery.ToListAsync();
+
+
+            foreach (var post in posts)
+            {
+                if (post.Driver != null)
+                {
+                    var avgRating = await _context.Ratings
+                        .Where(r => r.DriverId == post.Driver.DriverId)
+                        .Select(r => (float?)r.RatingValue)
+                        .AverageAsync();
+
+                    post.Driver.Rating = avgRating ?? 0;
+                }
+            }
 
             ViewData["searchTerm"] = searchTerm;
             ViewBag.Driver = driver;
@@ -71,12 +85,13 @@ namespace Transport.Controllers
 
             var post = new DriverPost
             {
-                IdentityUserId = userId,
+                DriverId = driver.DriverId,
                 Name = driver.Name,
                 Phone = driver.Phone,
                 CarName = driver.Car?.Model ?? "Unknown",
                 CarYear = model.CarYear,
                 AirCondition = model.AirCondition,
+                Note = model.Note,
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -99,7 +114,12 @@ namespace Transport.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var post = _context.DriverPosts.FirstOrDefault(p => p.PostId == id && p.IdentityUserId == userId);
+            var driver = _context.Drivers.FirstOrDefault(d => d.IdentityUserId == userId);
+            if (driver == null)
+                return Unauthorized();
+
+            var post = _context.DriverPosts.FirstOrDefault(p => p.PostId == id && p.DriverId == driver.DriverId);
+
             if (post == null)
             {
                 return Unauthorized(); 

@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewData["Title"] = "My Driver";
+}
+@if (ViewBag.Driver != null)
+{
+    <div class="d-flex justify-content-center">
+    <div class="w-50 card bg-dark text-white border-secondary shadow-sm row text-center col-md-4 ">
+        <h4 class="text-success">Driver</h4>
+        <p>Name: @ViewBag.Driver.Name  <br />Phone: @ViewBag.Driver.Phone  </p>
+        <p>  <i class="fa-solid fa-star fa-lg mb-3" style="color: #FFD43B; "> </i> @ViewBag.Driver.Rating.ToString("0.0") </p>
+        
+        @if (ViewBag.Driver.Car != null)
+        {
+            <h5>Car</h5>
+            <p>Model: @ViewBag.Driver.Car.Model</p>
+            <p>Plate: @ViewBag.Driver.Car.Plate</p>
+            <p class="mb-3">Total Passengers: @ViewBag.Driver.Car.PassengersTotal</p>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Student"))
+            {
+                <form asp-action="RateDriver" method="post" class=" mt-3">
+                    <input type="hidden" name="driverId" value="@ViewBag.Driver.DriverId" />
+                    <input type="hidden" id="ratingValue" name="ratingValue" value="0" />
+
+                    <label class="form-label d-block mb-2 fs-5 fw-bold text-light">Rate this driver:</label>
+
+                    <div id="starRating" class="d-inline-flex">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <i class="fa-solid fa-star fa-lg mx-1 text-secondary star"
+                               data-value="@i"
+                               style="cursor: pointer; transition: color 0.2s;"></i>
+                        }
+                    </div>
+
+                    <div class="mt-3 mb-3">
+                        <button type="submit" class="btn btn-warning px-4">Submit</button>
+                    </div>
+                </form>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const stars = document.querySelectorAll("#starRating .star");
+                        const ratingInput = document.getElementById("ratingValue");
+                        let selected = 0;
+
+                        stars.forEach(star => {
+                            star.addEventListener("mouseover", function () {
+                                const val = parseInt(this.getAttribute("data-value"));
+                                highlightStars(val);
+                            });
+
+                            star.addEventListener("mouseout", function () {
+                                highlightStars(selected);
+                            });
+
+                            star.addEventListener("click", function () {
+                                selected = parseInt(this.getAttribute("data-value"));
+                                ratingInput.value = selected;
+                                highlightStars(selected);
+                            });
+                        });
+
+                        function highlightStars(count) {
+                            stars.forEach((star, index) => {
+                                star.classList.toggle("text-warning", index < count);
+                                star.classList.toggle("text-secondary", index >= count);
+                            });
+                        }
+                    });
+                </script>
+            }
+        }
+        else
+        {
+            <p>No car assigned yet.</p>
+        }
+    </div>
+    </div>
+}
+else
+{
+    <p class="text-white">You Don't Have a Driver Yet.</p>
+}

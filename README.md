@@ -2,7 +2,7 @@
 
 Hi, this is the flowchart of the tables at the moment. <br> I have added the tables to local sql server (My individual accounts by default is sqlserver not sqlite(this has been changed to sqlite)). <br>
 
-📄 **[FlowChart V2](https://drive.google.com/file/d/1zkqRh20PhbxSPWsJ4BazyAK7lLSVKNWd/view?usp=drive_link)**
+📄 **[FlowChart V3](https://drive.google.com/file/d/1hsIjJOVzErfqHllzKjKEcuNCurKqNMnz/view?usp=drive_link)**
 
 <img width="278" height="424" alt="Database Flowchart" src="https://github.com/user-attachments/assets/52dee91f-0c99-4263-8b0f-2c0f68162144" />
 
@@ -41,3 +41,13 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
 ## Change Log – 4 - 2025/10/7
 - Added ratings to drivers posts to be viewed by users when browsing
 - users with role of "students" now have a page "My Driver" that contain their driver and his car information
+<br>
+
+## Change Log – 5 - 2025/10/10
+- Implemented the rating system fully , now users can rate a driver and that driver rating will show the average of them.
+- Drivers can "alert on arrive" to notify students of arrival.
+- Invites System implemented where drivers/parents won't be able assign
+the respective student until that student accept their invite (security measure).
+- parents can now link a student to themself and be able to see their info with a "Track" button (not implement with google maps/gps).
+- Created Ratings Table / Invites Table to hold that respective information.
+- Renames / enhancements / some fixes.

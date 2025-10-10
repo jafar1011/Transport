@@ -39,7 +39,7 @@
             <input type="text" class="form-control" readonly value="@ViewBag.Driver?.Car?.Model" />
         </div>
         <div>
-            <label>Car Year</label>
+            <label class="text-white">Car Year</label>
             <input asp-for="CarYear" class="form-control" />
         </div>
         <div>
@@ -55,9 +55,12 @@
             <input type="text" id="areaInput" class="form-control" placeholder="Add area and press Enter" />
             <div id="areaTags" style="margin-top:5px;"></div>
         </div>
+        <div>
+            <label class="text-white">Notes</label>
+            <input asp-for="Note" class="mb-3 form-control" />
+        </div>
 
         <button type="submit" class="btn btn-success mb-3">Submit Post</button>
-      
     </form>
 </div>
 @if (TempData["StatusMessage"] != null)
@@ -84,7 +87,7 @@
     {
         <div class="card mb-3 glass-card">
             <div class="card-body">
-                <h5 class="card-title">@post.Name - @post.CarName (@post.CarYear)</h5>
+                <h5 class="card-title text-success">@post.Name - @post.CarName (@post.CarYear)</h5>
                 <p class="card-text">Phone: @post.Phone</p>
                 <p class="card-text">Air Condition: @(post.AirCondition ? "Yes" : "No")</p>
                 @if (post.Areas != null && post.Areas.Count > 0)
@@ -97,11 +100,14 @@
                         }
                     </p>
                 }
-                <p class="text-center"><i class="fa-solid fa-star fa-lg" style="color: #FFD43B; "></i> @(post.Driver.Rating.ToString())  </p>
+                <p class="text-center"><i class="fa-solid fa-star fa-lg mb-3" style="color: #FFD43B; "></i> @(post.Driver.Rating.ToString("0.0"))  </p>
+
+                <p class="card-text mb-3">Notes: @(string.IsNullOrEmpty(post.Note) ? "None" : post.Note)</p>
+                
                 <small class="text-muted">Posted on: @post.CreatedAt.ToLocalTime()</small>
 
                 
-                @if (User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier) == post.IdentityUserId)
+                @if (User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier) == post.Driver.IdentityUserId)
                 {
                     <form asp-action="DeletePost" asp-controller="Home" method="post" style="display:inline;">
                         <input type="hidden" name="id" value="@post.PostId" />
