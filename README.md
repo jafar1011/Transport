@@ -44,10 +44,14 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
 <br>
 
 ## Change Log – 5 - 2025/10/10
-- Implemented the rating system fully , now users can rate a driver and that driver rating will show the average of them.
+- Implemented the rating system fully , now Students can rate their own driver and that driver rating's average will be shown.
 - Drivers can "alert on arrive" to notify students of arrival.
 - Invites System implemented where drivers/parents won't be able assign
 the respective student until that student accept their invite (security measure).
 - parents can now link a student to themself and be able to see their info with a "Track" button (not implement with google maps/gps).
 - Created Ratings Table / Invites Table to hold that respective information.
 - Renames / enhancements / some fixes.
+
+## Change Log – 6 - 2025/10/11
+- Drivers can not see their own ratings now (security measure).
+- CSS / Bootstrap enhancements.

@@ -43,7 +43,7 @@ footer {
         height: 100%;
         object-fit: cover;
         object-position: bottom;
-        filter: brightness(0.4);
+        filter: brightness(0.2);
     }
 .hero-text {
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
@@ -159,3 +159,4 @@ footer {
         cursor: pointer;
         margin-left: 5px;
     }
+

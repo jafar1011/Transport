@@ -8,9 +8,11 @@
 @if (!Model.Any())
 {
     <div class="alert alert-info">No pending invites.</div>
+    <hr class="text-white my-4" />
 }
 else
 {
+    <hr class="text-white my-4" />
     <div class="row">
         @foreach (var invite in Model)
         {

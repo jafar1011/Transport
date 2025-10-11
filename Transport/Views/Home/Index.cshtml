@@ -11,7 +11,8 @@
     <header class="hero-header mb-3 position-relative">
         <img src="~/image/home.jpg" class="img-fluid w-100" alt="Header Image">
         <div class="hero-text position-absolute top-50 start-50 translate-middle text-white text-center">
-            <h1 class="fw-bold display-1">Transport</h1>
+            <h1 class="fw-bold display-1">Transport</h1><br />
+            <a href = "#alldriverposts" class="btn glass-card  border-white btn-success rounded-pill text-white col-6">Explore Now &#8594;   </a>
         </div>
     </header>
 }
@@ -67,15 +68,17 @@
 {
     <div class="alert alert-success">@TempData["StatusMessage"]</div>
 }
-<h3 class="text-white mb-3">Driver Posts</h3>
+<h3 id="alldriverposts" class="text-white mb-3">All Driver Posts</h3>
 <div class="search-wrapper mb-3">
     <i class="fas fa-search search-icon"></i>
     <form method="get" class="search-form">
-        <input type="text" name="searchTerm" placeholder="Search by area..." value="@ViewData["searchTerm"]" />
+        <input type="text"   name="searchTerm" placeholder="Search by area..." value="@ViewData["searchTerm"]" />
         <button type="submit"><i class="fas fa-arrow-right"></i></button>
     </form>
 </div>
 <br />
+
+<hr class="text-white my-4" />
 
 
 
@@ -100,8 +103,10 @@
                         }
                     </p>
                 }
+                @if(!User.IsInRole("Driver"))
+                {
                 <p class="text-center"><i class="fa-solid fa-star fa-lg mb-3" style="color: #FFD43B; "></i> @(post.Driver.Rating.ToString("0.0"))  </p>
-
+                }
                 <p class="card-text mb-3">Notes: @(string.IsNullOrEmpty(post.Note) ? "None" : post.Note)</p>
                 
                 <small class="text-muted">Posted on: @post.CreatedAt.ToLocalTime()</small>
@@ -168,6 +173,10 @@ else
            
             if (!searchInput.matches(":focus") && searchInput.value.trim() === "") {
                 searchForm.classList.remove("active");
+            }
+            else
+            {
+                 searchForm.classList.add("active");
             }
         });
 
