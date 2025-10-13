@@ -27,9 +27,9 @@ namespace Transport.Data.Tables
 
         [ForeignKey("CarId")]
         public virtual Car Car { get; set; }
-
-        public string IdentityUserId { get; set; }
+        public string? IdentityUserId { get; set; }
         [ForeignKey("IdentityUserId")]
         public IdentityUser IdentityUser { get; set; }
+
     }
     }

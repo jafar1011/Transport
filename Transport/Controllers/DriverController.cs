@@ -8,6 +8,7 @@ using Transport.Data.Tables;
 namespace Transport.Controllers
 {
     [Authorize(Roles = "Driver")]
+    
     public class DriverController : Controller
     {
         private readonly ILogger<DriverController> _logger;
@@ -102,7 +103,7 @@ namespace Transport.Controllers
         [HttpPost]
         public async Task<IActionResult> RemovePassenger(int studentId)
         {
-            if (!User.IsInRole("Driver"))
+            if (!User.IsInRole("Driver") && !User.IsInRole("Admin"))
                 return Forbid();
 
             var student = await _context.Students.FindAsync(studentId);

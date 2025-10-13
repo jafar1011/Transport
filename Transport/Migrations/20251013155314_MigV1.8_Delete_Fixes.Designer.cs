@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Transport.Data;
 
@@ -10,9 +11,11 @@ using Transport.Data;
 namespace Transport.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251013155314_MigV1.8_Delete_Fixes")]
+    partial class MigV18_Delete_Fixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.17");
@@ -581,7 +584,7 @@ namespace Transport.Migrations
             modelBuilder.Entity("Transport.Data.Tables.DriverPost", b =>
                 {
                     b.HasOne("Transport.Data.Tables.Driver", "Driver")
-                        .WithMany()
+                        .WithMany("DriverPosts")
                         .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -603,15 +606,17 @@ namespace Transport.Migrations
             modelBuilder.Entity("Transport.Data.Tables.Invite", b =>
                 {
                     b.HasOne("Transport.Data.Tables.Driver", "Driver")
-                        .WithMany()
-                        .HasForeignKey("DriverId");
+                        .WithMany("Invites")
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Transport.Data.Tables.Parent", "Parent")
-                        .WithMany()
-                        .HasForeignKey("ParentId");
+                        .WithMany("Invites")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Transport.Data.Tables.Student", "Student")
-                        .WithMany()
+                        .WithMany("Invites")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -643,7 +648,7 @@ namespace Transport.Migrations
             modelBuilder.Entity("Transport.Data.Tables.Rating", b =>
                 {
                     b.HasOne("Transport.Data.Tables.Driver", "Driver")
-                        .WithMany()
+                        .WithMany("Ratings")
                         .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -676,13 +681,29 @@ namespace Transport.Migrations
                     b.Navigation("Students");
                 });
 
+            modelBuilder.Entity("Transport.Data.Tables.Driver", b =>
+                {
+                    b.Navigation("DriverPosts");
+
+                    b.Navigation("Invites");
+
+                    b.Navigation("Ratings");
+                });
+
             modelBuilder.Entity("Transport.Data.Tables.DriverPost", b =>
                 {
                     b.Navigation("Areas");
                 });
 
+            modelBuilder.Entity("Transport.Data.Tables.Parent", b =>
+                {
+                    b.Navigation("Invites");
+                });
+
             modelBuilder.Entity("Transport.Data.Tables.Student", b =>
                 {
+                    b.Navigation("Invites");
+
                     b.Navigation("Parent")
                         .IsRequired();
                 });

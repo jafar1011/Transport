@@ -30,7 +30,8 @@ namespace Transport.Data
             builder.Entity<IdentityRole>().HasData(
                 new IdentityRole { Id = "1", Name = "Driver", NormalizedName = "DRIVER" },
                 new IdentityRole { Id = "2", Name = "Student", NormalizedName = "STUDENT" },
-                new IdentityRole { Id = "3", Name = "Parent", NormalizedName = "PARENT" }
+                new IdentityRole { Id = "3", Name = "Parent", NormalizedName = "PARENT" },
+                new IdentityRole { Id = "4", Name = "Admin", NormalizedName = "ADMIN" }
             );
 
             
@@ -38,25 +39,25 @@ namespace Transport.Data
                 .HasOne(s => s.IdentityUser)
                 .WithMany()
                 .HasForeignKey(s => s.IdentityUserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Car>()
                 .HasOne(c => c.IdentityUser)
                 .WithMany()
                 .HasForeignKey(c => c.IdentityUserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Driver>()
                 .HasOne(d => d.IdentityUser)
                 .WithMany()
                 .HasForeignKey(d => d.IdentityUserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Parent>()
                 .HasOne(p => p.IdentityUser)
                 .WithMany()
                 .HasForeignKey(p => p.IdentityUserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
            
             builder.Entity<DriverPost>()

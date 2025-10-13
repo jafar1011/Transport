@@ -112,7 +112,7 @@
                 <small class="text-muted">Posted on: @post.CreatedAt.ToLocalTime()</small>
 
                 
-                @if (User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier) == post.Driver.IdentityUserId)
+                @if (User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier) == post.Driver.IdentityUserId || User.IsInRole("Admin"))
                 {
                     <form asp-action="DeletePost" asp-controller="Home" method="post" style="display:inline;">
                         <input type="hidden" name="id" value="@post.PostId" />

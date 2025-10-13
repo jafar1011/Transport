@@ -24,5 +24,6 @@ namespace Transport.Data.Tables
         public string IdentityUserId { get; set; }
         [ForeignKey("IdentityUserId")]
         public IdentityUser IdentityUser { get; set; }
+
     }
 }

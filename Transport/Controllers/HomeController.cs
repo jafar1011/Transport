@@ -109,24 +109,43 @@ namespace Transport.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Driver")]
-        public IActionResult DeletePost(int id)
+        [Authorize(Roles = "Driver,Admin")]
+        public async Task<IActionResult> DeletePost(int id)
         {
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            bool isAdmin = User.IsInRole("Admin");
 
-            var driver = _context.Drivers.FirstOrDefault(d => d.IdentityUserId == userId);
-            if (driver == null)
-                return Unauthorized();
-
-            var post = _context.DriverPosts.FirstOrDefault(p => p.PostId == id && p.DriverId == driver.DriverId);
-
-            if (post == null)
+            
+            int? driverId = null;
+            if (!isAdmin)
             {
-                return Unauthorized(); 
+                var driver = await _context.Drivers
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(d => d.IdentityUserId == userId);
+
+                if (driver == null)
+                    return Forbid();
+                driverId = driver.DriverId;
             }
 
+            DriverPost post;
+            if (isAdmin)
+            {
+                post = await _context.DriverPosts
+                    .FirstOrDefaultAsync(p => p.PostId == id);
+            }
+            else
+            {
+                post = await _context.DriverPosts
+                    .FirstOrDefaultAsync(p => p.PostId == id && p.DriverId == driverId);
+            }
+
+            if (post == null)
+                return Forbid();
+
             _context.DriverPosts.Remove(post);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             TempData["SuccessMessage"] = "Post deleted successfully.";
             return RedirectToAction("Index");
