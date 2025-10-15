@@ -21,6 +21,7 @@ namespace Transport.Data
         public DbSet<DriverPostArea> DriverPostAreas { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Invite> Invites { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

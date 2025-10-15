@@ -23,7 +23,7 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
 ## Change Log – 2 - 2025/10/4
 - Users with Role "Driver" can now add a full post with all details (name,phone,car,areas).
 - Posts will be shown to all users.
-- Post author can delete his own posts.
+- Only post author can delete his own posts.
 - Search box that searches all posts by area.
 - UI changes and css and icons for home view.
 - Swapped to sqlite instead of sqlserver so the database will be included in the project.
@@ -55,3 +55,13 @@ the respective student until that student accept their invite (security measure)
 ## Change Log – 6 - 2025/10/11
 - Drivers can not see their own ratings now (security measure).
 - CSS / Bootstrap enhancements.
+
+
+## Change Log – 7 - 2025/10/16
+- Admin control page added.
+- A master admin email (em: gaferadmin@gmail.com pw: Abcd1234!).
+- An admin can delete any post.
+- Can add more admins through the admin dashboard.
+- Can disable driver accounts through admin dashboard.
+- A Verification request will be sent to admins when a driver registers.
+- Drivers now can not add posts until an admin verify their account through admin dashboard (security measure).

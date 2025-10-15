@@ -4,22 +4,33 @@
 
 <h2 class="dashboard-title text-white">@ViewData["Title"]</h2>
 
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success w-50">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger w-50">@TempData["Error"]</div>
+}
+
 <div class="admin-dashboard">
 
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success w-50">@TempData["Success"]</div>
-    }
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger w-50">@TempData["Error"]</div>
-    }
+
+    <div class="admin-card">
+        <h4>Recently Registered</h4><br />
+        <button type="button" class="btn-primary">
+            <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="Verification">Verify Users</a>
+            
+        </button>
+    </div>
+
+
    
     <div class="admin-card">
-        <h4>Disable User</h4>
+        <h4>Disable Driver</h4>
         <form asp-action="DisableUser" asp-controller="Admin" method="post">
-            <input type="email" name="email" placeholder="User Email" required />
-            <button type="submit" class="btn-danger">Disable</button>
+            <input type="email" name="email" placeholder="Driver Email" required class="form-control mb-2" />
+            <button type="submit" class="btn btn-danger">Disable</button>
         </form>
     </div>
 
@@ -33,12 +44,7 @@
     </div>
 
     
-    <div class="admin-card">
-        <h4>View Logs</h4>
-        <form asp-action="ViewLogs" asp-controller="Admin" method="get">
-            <button type="submit" class="btn-primary">View Logs</button>
-        </form>
-    </div>
+    
 </div>
 
 <style>

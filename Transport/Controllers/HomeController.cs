@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -13,24 +14,38 @@ namespace Transport.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(UserManager<IdentityUser> userManager ,ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
+            _userManager = userManager;
         }
 
 
         public async Task<IActionResult> Index(string searchTerm)
         {
             Driver driver = null;
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string verification = "Pending"; // default for anonymous users
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (User.IsInRole("Driver") && userId != null)
+            if (!string.IsNullOrEmpty(userId))
             {
-                driver = await _context.Drivers
-                    .Include(d => d.Car)
-                    .FirstOrDefaultAsync(d => d.IdentityUserId == userId);
+                var user = await _userManager.GetUserAsync(User);
+                if (user != null)
+                {
+                    var permission = await _context.Permissions
+                        .FirstOrDefaultAsync(p => p.IdentityUserId == user.Id);
+                    verification = permission?.Verification ?? "Pending";
+
+                    if (User.IsInRole("Driver"))
+                    {
+                        driver = await _context.Drivers
+                            .Include(d => d.Car)
+                            .FirstOrDefaultAsync(d => d.IdentityUserId == userId);
+                    }
+                }
             }
 
             var postsQuery = _context.DriverPosts
@@ -44,7 +59,6 @@ namespace Transport.Controllers
             }
 
             var posts = await postsQuery.ToListAsync();
-
 
             foreach (var post in posts)
             {
@@ -62,6 +76,7 @@ namespace Transport.Controllers
             ViewData["searchTerm"] = searchTerm;
             ViewBag.Driver = driver;
             ViewBag.Posts = posts;
+            ViewBag.Verification = verification;
 
             return View(new DriverPost());
         }

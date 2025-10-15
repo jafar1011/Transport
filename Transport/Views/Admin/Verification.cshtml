@@ -1,0 +1,72 @@
+﻿@using Transport.Data.Tables
+@{
+    ViewData["Title"] = "Admin Verification";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success w-50">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger w-50">@TempData["Error"]</div>
+}
+
+@using Transport.Data.Tables
+@model IEnumerable<Driver>
+
+@{
+    ViewData["Title"] = "Pending Driver Verifications";
+}
+
+<h3 class="mb-3 text-center text-success">Pending Driver Verifications</h3>
+
+<table class="table table-bordered table-hover text-center align-middle">
+    <thead class="text-white">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var driver in Model)
+            {
+               
+                var permission = driver.IdentityUser != null
+                ? Context.RequestServices.GetService<Transport.Data.ApplicationDbContext>()?
+                .Permissions.FirstOrDefault(p => p.IdentityUserId == driver.IdentityUser.Id)
+                : null;
+
+                <tr class="text-white">
+                    <td>@driver.Name</td>
+                    <td>@driver.IdentityUser?.Email</td>
+                    <td>@driver.Phone</td>
+                    <td>
+                        <span class="badge bg-warning text-dark">
+                            @(permission?.Verification ?? "Unknown")
+                        </span>
+                    </td>
+                    <td>
+                        <form asp-action="ApproveDriver" asp-route-id="@driver.IdentityUserId" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                        </form>
+                        <form asp-action="RejectDriver" asp-route-id="@driver.IdentityUserId" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-muted">No pending verifications.</td>
+            </tr>
+        }
+    </tbody>
+</table>

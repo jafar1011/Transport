@@ -17,11 +17,18 @@
     </header>
 }
 
-@if (User.IsInRole("Driver"))
+@if (User.IsInRole("Driver") && ViewBag.Verification == "Approved")
 {
     <button class="btn btn-primary mb-3" id="btnAddPost">Add Post</button>
 }
-
+else if (User.IsInRole("Driver") && ViewBag.Verification == "Pending")
+{
+    <p class="text-warning">Your account is pending verification. You cannot add posts yet.</p>
+}
+else if (User.IsInRole("Driver") && ViewBag.Verification == "Rejected")
+{
+    <p class="text-danger">Your verification request was rejected or account is disabled. Please contact support.</p>
+}
 
 <div id="addPostFormContainer" style="display:none;">
     <form asp-action="AddPost" method="post">
