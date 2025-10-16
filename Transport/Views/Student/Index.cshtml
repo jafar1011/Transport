@@ -17,6 +17,7 @@
             <p>Model: @ViewBag.Driver.Car.Model</p>
             <p>Plate: @ViewBag.Driver.Car.Plate</p>
             <p class="mb-3">Total Passengers: @ViewBag.Driver.Car.PassengersTotal</p>
+                <button type="button" class="btn btn-warning "><i class="fa-solid fa-bell"></i> Inform Absent</button>
             @if (User.Identity.IsAuthenticated && User.IsInRole("Student"))
             {
                 <form asp-action="RateDriver" method="post" class=" mt-3">

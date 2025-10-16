@@ -65,3 +65,7 @@ the respective student until that student accept their invite (security measure)
 - Can disable driver accounts through admin dashboard.
 - A Verification request will be sent to admins when a driver registers.
 - Drivers now can not add posts until an admin verify their account through admin dashboard (security measure).
+
+
+## Change Log – 8 - 2025/10/17
+- CSS enhancements.
