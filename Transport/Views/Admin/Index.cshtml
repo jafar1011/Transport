@@ -43,9 +43,16 @@
         </form>
     </div>
 
-    
-    
 </div>
+<br />
+<div class="admin-card">
+    <h4>Manage User Data</h4>
+    <form asp-action="ManageUser" asp-controller="Admin" method="get">
+        <input type="email" name="email" placeholder="User Email" required class="form-control mb-2" />
+        <button type="submit" class="btn btn-success">Manage</button>
+    </form>
+</div>
+
 
 <style>
   /*css template*/

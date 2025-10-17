@@ -12,7 +12,7 @@
         <form method="post">
     @if (Model.Role == "Driver")
     {
-        <h3>Driver Info</h3>
+        <h3>Fill In Driver Info</h3>
         <div>
             <label>Name</label>
             <input asp-for="Driver.Name" class="form-control" />
@@ -22,7 +22,7 @@
             <input asp-for="Driver.Phone" class="form-control" />
         </div>
         <div>
-            <label>Areas</label>
+            <label>Address</label>
             <input asp-for="Driver.Areas" class="form-control" />
         </div>
 
@@ -42,7 +42,7 @@
     }
     else if (Model.Role == "Student")
     {
-        <h3>Student Info</h3>
+        <h3>Fill In Student Info</h3>
         <div><label>Name</label><input asp-for="Student.Name" class="form-control" /></div>
         <div><label>Phone</label><input asp-for="Student.Phone" class="form-control" /></div>
         <div><label>Address</label><input asp-for="Student.Address" class="form-control" /></div>
@@ -53,7 +53,7 @@
     }
     else if (Model.Role == "Parent")
     {
-        <h3>Parent Info</h3>
+        <h3>Fill In Parent Info</h3>
         <div><label>Name</label><input asp-for="Parent.Name" class="form-control" /></div>
         <div><label>Phone</label><input asp-for="Parent.Phone" class="form-control" /></div>
     
@@ -66,12 +66,8 @@
     <br />
     <button type="submit" class="btn btn-primary">Save Changes</button>
 </form>
+</<div>
 
-@if (TempData["StatusMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["StatusMessage"]</div>
-}
+</div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+

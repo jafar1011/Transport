@@ -128,51 +128,89 @@ namespace Transport.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
+
             Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+
             if (Role == "Driver")
             {
-               
-                Driver.IdentityUserId = user.Id;
-                if (Driver.DriverId == 0)
-                    _context.Drivers.Add(Driver);
-                else
-                    _context.Drivers.Update(Driver);
+                // Fetch existing driver and car from DB
+                var existingDriver = await _context.Drivers
+                    .Include(d => d.Car)
+                    .FirstOrDefaultAsync(d => d.IdentityUserId == user.Id);
 
-                if (Car != null)
+                if (existingDriver == null)
                 {
-                    Car.IdentityUserId = user.Id;
-                    if (Car.CarId == 0)
-                        _context.Cars.Add(Car);
-                    else
-                        _context.Cars.Update(Car);
+                    // New driver
+                    Driver.IdentityUserId = user.Id;
+                    if (Car != null) Car.IdentityUserId = user.Id;
                     Driver.Car = Car;
+                    _context.Drivers.Add(Driver);
+                }
+                else
+                {
+                    // Update existing driver
+                    existingDriver.Name = Driver.Name;
+                    existingDriver.Phone = Driver.Phone;
+                    existingDriver.Areas = Driver.Areas;
+
+                    if (existingDriver.Car == null && Car != null)
+                    {
+                        Car.IdentityUserId = user.Id;
+                        existingDriver.Car = Car;
+                        _context.Cars.Add(Car);
+                    }
+                    else if (existingDriver.Car != null && Car != null)
+                    {
+                        existingDriver.Car.Model = Car.Model;
+                        existingDriver.Car.Plate = Car.Plate;
+                        existingDriver.Car.PassengersTotal = Car.PassengersTotal;
+                    }
                 }
             }
             else if (Role == "Student")
             {
-                Student.IdentityUserId = user.Id;
-                if (Student.StudentId == 0)
+                // Fetch existing student
+                var existingStudent = await _context.Students
+                    .FirstOrDefaultAsync(s => s.IdentityUserId == user.Id);
+
+                if (existingStudent == null)
+                {
+                    Student.IdentityUserId = user.Id;
                     _context.Students.Add(Student);
+                }
                 else
-                    _context.Students.Update(Student);
+                {
+                    existingStudent.Name = Student.Name;
+                    existingStudent.Phone = Student.Phone;
+                    existingStudent.Address = Student.Address;
+                    existingStudent.University = Student.University;
+                    existingStudent.College = Student.College;
+                    existingStudent.Department = Student.Department;
+                    existingStudent.Stage = Student.Stage;
+                }
             }
             else if (Role == "Parent")
             {
-                Parent.IdentityUserId = user.Id;
-                if (Parent.ParentId == 0)
+                // Fetch existing parent
+                var existingParent = await _context.Parents
+                    .FirstOrDefaultAsync(p => p.IdentityUserId == user.Id);
+
+                if (existingParent == null)
+                {
+                    Parent.IdentityUserId = user.Id;
                     _context.Parents.Add(Parent);
+                }
                 else
-                    _context.Parents.Update(Parent);
+                {
+                    existingParent.Name = Parent.Name;
+                    existingParent.Phone = Parent.Phone;
+                }
             }
 
+            // Save all changes
             await _context.SaveChangesAsync();
 
-            if (!ModelState.IsValid)
-            {
-                await LoadAsync(user);
-                return Page();
-            }
-
+            // Update phone number if changed
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {
