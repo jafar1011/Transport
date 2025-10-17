@@ -2,7 +2,10 @@
 
 Hi, this is the flowchart of the tables at the moment. <br> I have added the tables to local sql server (My individual accounts by default is sqlserver not sqlite(this has been changed to sqlite)). <br>
 
-
+admin master email: admin@gmail.com
+pw: Abcd1234!
+this is used as the master admin email through it more admins can be added etc.
+<br>
 ## WorkFlow Walkthrough
 - Driver & Student:
 - Driver registers -> Verification request sent to admin -> Verified ->  Driver adds post.
@@ -17,7 +20,7 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
 
 📄 **[FlowChart V3](https://drive.google.com/file/d/1hsIjJOVzErfqHllzKjKEcuNCurKqNMnz/view?usp=drive_link)**
 
-<img width="278" height="424" alt="Database Flowchart" src="https://github.com/user-attachments/assets/52dee91f-0c99-4263-8b0f-2c0f68162144" />
+
 
 ---
 
@@ -50,7 +53,6 @@ Hi, this is the flowchart of the tables at the moment. <br> I have added the tab
 - The student will be assigned to that specific car.
 
 <br>
-<img width="574" height="542" alt="image" src="https://github.com/user-attachments/assets/59053608-b8e8-4b93-8bf1-c06e33e03601" />
 
 ## Change Log – 4 - 2025/10/7
 - Added ratings to drivers posts to be viewed by users when browsing
@@ -73,7 +75,7 @@ the respective student until that student accept their invite (security measure)
 
 ## Change Log – 7 - 2025/10/16
 - Admin control page added.
-- A master admin email (em: gaferadmin@gmail.com pw: Abcd1234!).
+- A master admin email (em: admin@gmail.com pw: Abcd1234!).
 - An admin can delete any post.
 - Can add more admins through the admin dashboard.
 - Can disable driver accounts through admin dashboard.
@@ -81,15 +83,8 @@ the respective student until that student accept their invite (security measure)
 - Drivers now can not add posts until an admin verify their account through admin dashboard (security measure).
 
 
-<<<<<<< HEAD
 ## Change Log – 8 And Final - 2025/10/17
 - CSS enhancements.
 - Admin can now manage all users data and change them throguh admin dashboard.
 - Fixed user not being able to change his info.
 - Database cleanup and enhancements
-
-
-=======
-## Change Log – 8 - 2025/10/17
-- CSS enhancements.
->>>>>>> 3e1025d1edb5546894b9b98f674067d790add104
