@@ -151,7 +151,7 @@ namespace Transport.Areas.Identity.Pages.Account.Manage
                     // Update existing driver
                     existingDriver.Name = Driver.Name;
                     existingDriver.Phone = Driver.Phone;
-                    existingDriver.Areas = Driver.Areas;
+                    existingDriver.Address = Driver.Address;
 
                     if (existingDriver.Car == null && Car != null)
                     {

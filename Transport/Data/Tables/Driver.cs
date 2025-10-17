@@ -16,7 +16,7 @@ namespace Transport.Data.Tables
         public string Phone { get; set; }
 
         [Required]
-        public string Areas { get; set; }
+        public string Address { get; set; }
 
         [Range(0, 5)]
         [NotMapped]

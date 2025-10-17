@@ -233,7 +233,7 @@ namespace Transport.Controllers
                     // Update existing driver
                     driver.Name = model.Driver.Name;
                     driver.Phone = model.Driver.Phone;
-                    driver.Areas = model.Driver.Areas;
+                    driver.Address = model.Driver.Address;
 
                     if (driver.Car == null && model.Car != null && !string.IsNullOrEmpty(model.Car.Model))
                     {
