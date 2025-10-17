@@ -1,12 +1,26 @@
-# Project
+# Project (Finished)
 
 Hi, this is the flowchart of the tables at the moment. <br> I have added the tables to local sql server (My individual accounts by default is sqlserver not sqlite(this has been changed to sqlite)). <br>
+
+
+## WorkFlow Walkthrough
+- Driver & Student:
+- Driver registers -> Verification request sent to admin -> Verified ->  Driver adds post.
+- Student registers -> Browses posts -> Contacts Driver -> Driver sends invite to student by his phone number.
+- Student accepts invite -> Student is now linked to the drivers as passenger.
+- Parent & Student:
+- Parent registers -> Parent sends invite to student by his phone number.
+- Student accepts invite -> Student is now linked to the parent.
+
+
+<br>
 
 📄 **[FlowChart V3](https://drive.google.com/file/d/1hsIjJOVzErfqHllzKjKEcuNCurKqNMnz/view?usp=drive_link)**
 
 <img width="278" height="424" alt="Database Flowchart" src="https://github.com/user-attachments/assets/52dee91f-0c99-4263-8b0f-2c0f68162144" />
 
 ---
+
 
 ## Change Log – 1 - 2025/10/3
 
@@ -67,5 +81,10 @@ the respective student until that student accept their invite (security measure)
 - Drivers now can not add posts until an admin verify their account through admin dashboard (security measure).
 
 
-## Change Log – 8 - 2025/10/17
+## Change Log – 8 And Final - 2025/10/17
 - CSS enhancements.
+- Admin can now manage all users data and change them throguh admin dashboard.
+- Fixed user not being able to change his info.
+- Database cleanup and enhancements
+
+
