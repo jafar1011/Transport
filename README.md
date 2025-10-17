@@ -81,6 +81,7 @@ the respective student until that student accept their invite (security measure)
 - Drivers now can not add posts until an admin verify their account through admin dashboard (security measure).
 
 
+<<<<<<< HEAD
 ## Change Log – 8 And Final - 2025/10/17
 - CSS enhancements.
 - Admin can now manage all users data and change them throguh admin dashboard.
@@ -88,3 +89,7 @@ the respective student until that student accept their invite (security measure)
 - Database cleanup and enhancements
 
 
+=======
+## Change Log – 8 - 2025/10/17
+- CSS enhancements.
+>>>>>>> 3e1025d1edb5546894b9b98f674067d790add104
